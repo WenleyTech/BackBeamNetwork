@@ -1,71 +1,658 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BackBeam</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #f7f6f3;
+      --paper: #ffffff;
+      --ink: #1c1c1c;
+      --muted: #666666;
+      --line: rgba(28, 28, 28, 0.12);
+      --accent: #1f2a44;
+      --accent-2: #2f4f4f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #F7F6F3;
-      color: #1C1C1C;
       margin: 0;
-      padding: 40px;
-      max-width: 900px;
-      margin: auto;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Inter", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
-    h1 {
-      font-size: 40px;
-      margin-bottom: 20px;
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
-    .card {
-      border: 1px solid #ddd;
-      padding: 20px;
-      margin-top: 20px;
-      border-radius: 10px;
+
+    .container {
+      width: min(1160px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      border-bottom: 1px solid var(--line);
+      background: rgba(247, 246, 243, 0.92);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .site-header .inner {
+      min-height: 84px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      font-family: "Libre Baskerville", serif;
+      font-size: 18px;
+    }
+
+    .brand-name {
+      font-family: "Libre Baskerville", serif;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      font-size: 14px;
+      color: #505050;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 999px;
+      padding: 14px 24px;
+      font-size: 15px;
+      font-weight: 600;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #182036;
+    }
+
+    .btn-dark {
+      background: #1c1c1c;
+      color: white;
+    }
+
+    .btn-dark:hover {
+      background: black;
+    }
+
+    .btn-outline {
+      border-color: var(--line);
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .btn-outline:hover {
       background: white;
     }
-    button {
-      margin-top: 20px;
-      padding: 12px 20px;
-      border-radius: 30px;
-      border: none;
-      background: #1C1C1C;
-      color: white;
-      cursor: pointer;
+
+    .hero {
+      padding: 88px 0 72px;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .hero h1,
+    .section-title,
+    .sample-title,
+    .cta-title {
+      font-family: "Libre Baskerville", serif;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      margin: 0;
+      color: var(--ink);
+    }
+
+    .hero h1 {
+      max-width: 980px;
+      font-size: clamp(46px, 7vw, 84px);
+      line-height: 1.04;
+    }
+
+    .hero p {
+      max-width: 820px;
+      margin: 28px 0 0;
+      font-size: 22px;
+      line-height: 1.7;
+      color: #565656;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      margin-top: 36px;
+      flex-wrap: wrap;
+    }
+
+    section {
+      padding: 84px 0;
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 34px;
+    }
+
+    .section-title {
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.12;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .experience-card,
+    .step-card,
+    .profile-shell {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+    }
+
+    .experience-card {
+      padding: 30px;
+      transition: 0.2s ease;
+    }
+
+    .experience-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(28,28,28,0.2);
+    }
+
+    .experience-card h3 {
+      margin: 0;
+      font-family: "Libre Baskerville", serif;
+      font-size: 31px;
+      line-height: 1.22;
+      font-weight: 400;
+    }
+
+    .experience-card p {
+      margin: 16px 0 0;
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 16px;
+    }
+
+    .how {
+      background: rgba(255,255,255,0.65);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .step-card {
+      padding: 30px;
+    }
+
+    .step-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      background: #fff;
+      color: var(--accent);
+      font-size: 18px;
+      margin-bottom: 22px;
+    }
+
+    .step-card h3 {
+      margin: 0;
+      font-family: "Libre Baskerville", serif;
+      font-size: 29px;
+      line-height: 1.2;
+      font-weight: 400;
+    }
+
+    .step-card p {
+      margin: 16px 0 0;
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 16px;
+    }
+
+    .sample-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 34px;
+      align-items: start;
+    }
+
+    .sample-copy p {
+      margin-top: 22px;
+      color: #5c5c5c;
+      font-size: 20px;
+      line-height: 1.75;
+      max-width: 560px;
+    }
+
+    .profile-shell {
+      padding: 38px;
+    }
+
+    .profile-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--line);
+      flex-wrap: wrap;
+    }
+
+    .profile-name {
+      margin: 0;
+      font-family: "Libre Baskerville", serif;
+      font-size: 38px;
+      line-height: 1.15;
+      font-weight: 400;
+    }
+
+    .profile-role {
+      margin-top: 10px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+    }
+
+    .badge {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      align-self: flex-start;
+      white-space: nowrap;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 0.9fr;
+      gap: 42px;
+      padding-top: 30px;
+    }
+
+    .mini-label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .focus-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 14px;
+    }
+
+    .focus-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    .check {
+      color: var(--accent-2);
+      font-weight: 700;
+      margin-top: 1px;
+    }
+
+    .approach-copy,
+    .profile-text {
+      color: #5f5f5f;
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .quote {
+      margin: 0 0 18px;
+      font-family: "Libre Baskerville", serif;
+      font-size: 33px;
+      line-height: 1.25;
+      font-weight: 400;
+    }
+
+    .cta-band {
+      background: #efede8;
+      border-top: 1px solid var(--line);
+    }
+
+    .cta-wrap {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+    }
+
+    .cta-title {
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 1.14;
+    }
+
+    .cta-copy {
+      margin-top: 22px;
+      color: #5e5e5e;
+      font-size: 20px;
+      line-height: 1.75;
+      max-width: 760px;
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 980px) {
+      .nav {
+        display: none;
+      }
+
+      .card-grid,
+      .steps,
+      .sample-grid,
+      .profile-grid,
+      .cta-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 62px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(100% - 32px, 1160px);
+      }
+
+      .hero p,
+      .sample-copy p,
+      .cta-copy {
+        font-size: 18px;
+      }
+
+      .experience-card,
+      .step-card,
+      .profile-shell {
+        padding: 24px;
+      }
+
+      .experience-card h3,
+      .step-card h3 {
+        font-size: 25px;
+      }
+
+      .profile-name {
+        font-size: 30px;
+      }
+
+      .quote {
+        font-size: 27px;
+      }
     }
   </style>
 </head>
-
 <body>
+  <header class="site-header">
+    <div class="container inner">
+      <div class="brand">
+        <div class="brand-mark">B</div>
+        <div>
+          <div class="brand-name">BackBeam</div>
+          <div class="brand-sub">Therapist Directory</div>
+        </div>
+      </div>
 
-<h1>Find a therapist who understands the financial and emotional weight you’ve been carrying.</h1>
+      <nav class="nav">
+        <a href="#experiences">Experiences</a>
+        <a href="#how">How it works</a>
+        <a href="#therapists">For therapists</a>
+      </nav>
 
-<p>
-Financial betrayal, pressure, manipulation, and boundary challenges — matched with therapists who understand the full context.
-</p>
+      <a href="#therapists" class="btn btn-primary">Apply to join</a>
+    </div>
+  </header>
 
-<div class="card">
-  <strong>I trusted someone and money was used against me</strong>
-</div>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="eyebrow">Editorial clinical care discovery</div>
+        <h1>Find a therapist who understands the financial and emotional weight you’ve been carrying.</h1>
+        <p>
+          Financial betrayal, pressure, manipulation, and boundary challenges — matched with therapists who understand the full context.
+        </p>
+        <div class="hero-actions">
+          <a href="#experiences" class="btn btn-dark">Start here</a>
+          <a href="#sample" class="btn btn-outline">See sample listing</a>
+        </div>
+      </div>
+    </section>
 
-<div class="card">
-  <strong>My family depends on me financially and it’s overwhelming</strong>
-</div>
+    <section id="experiences">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Start here</div>
+          <h2 class="section-title">Start with what feels closest to your experience.</h2>
+        </div>
 
-<div class="card">
-  <strong>I have a hard time saying no when money is involved</strong>
-</div>
+        <div class="card-grid">
+          <div class="experience-card">
+            <h3>I trusted someone and money was used against me</h3>
+            <p>Financial betrayal, deception, scams, or relationship-based financial harm.</p>
+          </div>
 
-<div class="card">
-  <strong>I’ve always had to carry more than I should</strong>
-</div>
+          <div class="experience-card">
+            <h3>My family depends on me financially and it feels overwhelming</h3>
+            <p>Pressure, obligation, guilt, and ongoing financial responsibility.</p>
+          </div>
 
-<div class="card">
-  <strong>Money brings stress, shame, or avoidance</strong>
-</div>
+          <div class="experience-card">
+            <h3>I have a hard time saying no when money is involved</h3>
+            <p>Boundary strain, over-giving, codependency, and resentment.</p>
+          </div>
 
-<button>Apply as a Therapist</button>
+          <div class="experience-card">
+            <h3>I have always had to carry more than I should</h3>
+            <p>Parentification, over-responsibility, and eldest role dynamics.</p>
+          </div>
 
+          <div class="experience-card">
+            <h3>Money brings up stress, shame, or avoidance for me</h3>
+            <p>Financial anxiety, shutdown, overwhelm, and recovery after harm.</p>
+          </div>
+
+          <div class="experience-card">
+            <h3>I am trying to rebuild trust after what happened</h3>
+            <p>Recovery, emotional clarity, and support after betrayal or manipulation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="how" id="how">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">How it works</div>
+          <h2 class="section-title">Thoughtful matching, without the noise of a generic directory.</h2>
+        </div>
+
+        <div class="steps">
+          <div class="step-card">
+            <div class="step-icon">01</div>
+            <h3>Start with your experience</h3>
+            <p>Begin with language that feels true to what you are carrying, rather than guessing broad clinical categories.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-icon">02</div>
+            <h3>We map it to relevant care</h3>
+            <p>BackBeam connects lived experience to therapist approaches such as trauma-informed care, family systems, relational therapy, and boundary work.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-icon">03</div>
+            <h3>Connect with a better-fit therapist</h3>
+            <p>View profiles presented with more context, so the match feels thoughtful instead of random.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sample">
+      <div class="container">
+        <div class="sample-grid">
+          <div class="sample-copy">
+            <div class="eyebrow">For therapists</div>
+            <h2 class="sample-title">See how your work can be presented with more clarity.</h2>
+            <p>
+              BackBeam helps connect the language therapists already use to the way people actually describe what they have lived through.
+            </p>
+          </div>
+
+          <div class="profile-shell">
+            <div class="profile-top">
+              <div>
+                <h3 class="profile-name">Dr. Maya Thompson, LCSW</h3>
+                <div class="profile-role">Trauma-informed therapist</div>
+              </div>
+              <div class="badge">Aligned with BackBeam focus areas</div>
+            </div>
+
+            <div class="profile-grid">
+              <div>
+                <div class="mini-label">Works with clients navigating</div>
+                <ul class="focus-list">
+                  <li><span class="check">✓</span><span>financial betrayal or deception</span></li>
+                  <li><span class="check">✓</span><span>family financial pressure and obligation</span></li>
+                  <li><span class="check">✓</span><span>boundary challenges around money</span></li>
+                  <li><span class="check">✓</span><span>rebuilding trust after manipulation</span></li>
+                </ul>
+
+                <div style="margin-top:32px;">
+                  <div class="mini-label">Approach</div>
+                  <div class="approach-copy">
+                    Trauma-informed care, family systems, relational therapy, and boundary work.
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="mini-label">Profile statement</div>
+                <p class="quote">You don’t have to explain everything from scratch.</p>
+                <div class="profile-text">
+                  I help clients make sense of financial and relational experiences that are often hard to name, and work toward clarity, boundaries, and trust after harm.
+                </div>
+
+                <div style="margin-top:28px;">
+                  <a href="#therapists" class="btn btn-dark">View profile</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band" id="therapists">
+      <div class="container">
+        <div class="cta-wrap">
+          <div>
+            <div class="eyebrow">Join BackBeam</div>
+            <h2 class="cta-title">Present your work with clarity.</h2>
+            <p class="cta-copy">
+              Join BackBeam to be discoverable to clients navigating financial and relationship dynamics you may already work with in practice.
+            </p>
+          </div>
+
+          <div class="cta-actions">
+            <a href="#" class="btn btn-primary">Apply to join</a>
+            <a href="#" class="btn btn-outline">See pricing</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 </body>
 </html>
